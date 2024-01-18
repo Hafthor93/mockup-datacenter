@@ -1,8 +1,10 @@
 import React from 'react';
-import styled from 'styled-components';
 import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
+import styled from 'styled-components';
 import Heatmap from './Heatmap';
 import MinerInfo from './MinerInfo';
+import Security from './Security';
+
 
 
 const Container = styled.div`
@@ -43,8 +45,6 @@ const Home = () => <div>Home Page</div>;
 
 const Info = () => <div>Info Page</div>;
 const Settings = () => <div>Settings Page</div>;
-
-const Security = () => <div>Security Page</div>;
 
 const App = () => {
   return (
