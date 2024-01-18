@@ -57,18 +57,19 @@ const App = () => {
             <Link to="/heatmap">Heatmap</Link>
             <Link to="/info">Info</Link>
             <Link to="/settings">Settings</Link>
-            <Link to="/minerinfo">Miner Info</Link>
             <Link to="/security">Security</Link> {/* Added Security Link */}
           </NavLinks>
         </Navbar>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/heatmap" element={<Heatmap />} />
-          <Route path="/info" element={<Info />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/minerinfo/:id" element={<MinerInfo />} />
-          <Route path="/security" element={<Security />} /> {/* Added Security Route */}
-        </Routes>
+  <Route path="/" element={<Home />} />
+  <Route path="/heatmap" element={<Heatmap />} />
+  <Route path="/info" element={<Info />} />
+  <Route path="/settings" element={<Settings />} />
+  <Route path="/minerinfo/:id" element={<MinerInfo />} />
+  <Route path="/security" element={<Security />} />
+</Routes>
+
+
       </Container>
     </BrowserRouter>
   );
