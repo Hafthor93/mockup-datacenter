@@ -1,103 +1,87 @@
-// Heatmap.js
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
 
 const HeatmapContainer = styled.div`
   display: flex;
-  justify-content: space-around;
-  padding: 20px;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
 `;
 
 const Pod = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-right: 20px; /* Add margin between PODs */
+  text-align: center;
+  margin-bottom: 40px;
+  
 `;
 
-const Rack = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+const PodTitle = styled.h2`
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 1.5rem;
 `;
 
-const MinerBox = styled(Link)`
+const Row = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
-  width: 50px; /* Adjust the width as needed */
-  height: 80px; /* Adjust the height as needed */
+  margin-bottom: 10px;
+`;
+
+const Miner = styled.div`
+  width: 60px;
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+  background-color: #4caf50;
+  color: white;
   margin: 5px;
-  background-color: lightblue;
+  border-radius: 10px;
   cursor: pointer;
-  text-decoration: none;
-  color: inherit;
+  transition: background-color 0.3s, transform 0.3s;
 
   &:hover {
-    background-color: lightcoral;
+    background-color: #66bb6a;
+    transform: scale(1.1);
   }
 `;
 
-const generateRandomData = () => {
-  const getRandomValue = () => Math.floor(Math.random() * 100);
-
-  return {
-    firmware: `Firmware Version ${getRandomValue()}.${getRandomValue()}.${getRandomValue()}`,
-    ip: `192.168.${getRandomValue()}.${getRandomValue()}`,
-    macAddress: Array.from({ length: 6 }, () => getRandomValue().toString(16).padStart(2, '0')).join(':'),
-    heat: `${getRandomValue()}°C`,
-    fanSpeed: `${getRandomValue()} RPM`,
-    hashPower: `${getRandomValue()} MH/s`,
-  };
-};
-
 const Heatmap = () => {
-  // Generate an array of 100 miners
-  const miners = Array.from({ length: 100 }, (_, index) => index + 1);
+  const navigate = useNavigate();
 
-  // Helper function to chunk the array into racks
-  const chunkArray = (array, size) => {
-    return Array.from({ length: Math.ceil(array.length / size) }, (_, i) =>
-      array.slice(i * size, i * size + size)
+  const handleClick = (minerId) => {
+    navigate(`/minerinfo/${minerId}`);
+  };
+
+  const renderMiners = (pod) => {
+    return [...Array(100)].map((_, index) => (
+      <Miner key={`${pod}-${index}`} onClick={() => handleClick(`${pod}-${index}`)}>
+        {index + 1}
+      </Miner>
+    ));
+  };
+
+  const renderPod = (pod) => {
+    const miners = renderMiners(pod);
+    const rows = [];
+    for (let i = 0; i < miners.length; i += 4) {
+      rows.push(
+        <Row key={`${pod}-row-${i / 4}`}>
+          {miners.slice(i, i + 4)}
+        </Row>
+      );
+    }
+    return (
+      <Pod key={pod}>
+        <PodTitle>{pod}</PodTitle>
+        {rows}
+      </Pod>
     );
   };
 
-  // Chunk miners into racks with 4 miners per row
-  const minersInRacks = chunkArray(miners, 4);
-
   return (
     <HeatmapContainer>
-      <Pod>
-        <h2>POD1</h2>
-        {minersInRacks.slice(0, 25).map((rack, rackIndex) => (
-          <Rack key={`pod1-rack-${rackIndex}`}>
-            {rack.map((miner) => (
-              <MinerBox key={`pod1-${miner}`} to={`/minerinfo/${miner}`} state={generateRandomData()}>
-              {miner}
-            </MinerBox>            
-            ))}
-          </Rack>
-        ))}
-      </Pod>
-
-      <Pod>
-        <h2>POD2</h2>
-        {minersInRacks.slice(25).map((rack, rackIndex) => (
-          <Rack key={`pod2-rack-${rackIndex}`}>
-            {rack.map((miner) => (
-              <MinerBox
-                key={`pod2-${miner}`}
-                to={`/minerinfo/${miner}`}
-                state={generateRandomData()} // Pass state with random data
-              >
-                {miner}
-              </MinerBox>
-            ))}
-          </Rack>
-        ))}
-      </Pod>
+      {renderPod('POD1')}
+      {renderPod('POD2')}
     </HeatmapContainer>
   );
 };

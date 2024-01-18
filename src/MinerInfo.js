@@ -1,61 +1,37 @@
-// MinerInfo.js
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 const MinerInfoContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   padding: 20px;
 `;
 
-const InfoRow = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-`;
+const MinerInfo = () => {
+  const { id } = useParams();
 
-const Label = styled.div`
-  font-weight: bold;
-  margin-right: 10px;
-`;
+  // Dummy data generator
+  const generateDummyData = () => {
+    return {
+      ip: `192.168.1.${Math.floor(Math.random() * 255)}`,
+      macAddress: 'XX:XX:XX:XX:XX:XX', // Static for simplicity
+      heat: `${Math.floor(Math.random() * 100)}°C`,
+      fanSpeed: `${Math.floor(Math.random() * 5000)} RPM`,
+      hashPower: `${Math.floor(Math.random() * 1000)} MH/s`,
+      status: Math.random() > 0.5 ? 'Online' : 'Offline'
+    };
+  };
 
-const MinerInfo = ({ match, location }) => {
-  // Check if match and location are defined before accessing their properties
-  if (!match || !location || !location.state) {
-    return <div>No data available</div>;
-  }
-  
-  const minerId = match.params.id;
-  const minerData = location.state;
+  const minerData = generateDummyData();
 
   return (
     <MinerInfoContainer>
-      <h2>Miner Information for Miner {minerId}</h2>
-      <InfoRow>
-        <Label>Firmware:</Label>
-        {minerData.firmware}
-      </InfoRow>
-      <InfoRow>
-        <Label>IP:</Label>
-        {minerData.ip}
-      </InfoRow>
-      <InfoRow>
-        <Label>MAC Address:</Label>
-        {minerData.macAddress}
-      </InfoRow>
-      <InfoRow>
-        <Label>Heat:</Label>
-        {minerData.heat}
-      </InfoRow>
-      <InfoRow>
-        <Label>Fan Speed:</Label>
-        {minerData.fanSpeed}
-      </InfoRow>
-      <InfoRow>
-        <Label>Hash Power:</Label>
-        {minerData.hashPower}
-      </InfoRow>
+      <h1>Miner Info: {id}</h1>
+      <p>IP: {minerData.ip}</p>
+      <p>MAC Address: {minerData.macAddress}</p>
+      <p>Heat: {minerData.heat}</p>
+      <p>Fan Speed: {minerData.fanSpeed}</p>
+      <p>Hash Power: {minerData.hashPower}</p>
+      <p>Status: {minerData.status}</p>
     </MinerInfoContainer>
   );
 };
