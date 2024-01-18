@@ -3,7 +3,36 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 const MinerInfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+`;
+
+const MinerTitle = styled.h1`
+  color: #333;
+  margin-bottom: 30px;
+`;
+
+const InfoCard = styled.div`
+  background-color: #f7f7f7;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
+  margin-bottom: 20px;
+  width: 80%;
+  max-width: 500px;
+`;
+
+const InfoRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+`;
+
+const Label = styled.span`
+  font-weight: bold;
 `;
 
 const MinerInfo = () => {
@@ -25,13 +54,27 @@ const MinerInfo = () => {
 
   return (
     <MinerInfoContainer>
-      <h1>Miner Info: {id}</h1>
-      <p>IP: {minerData.ip}</p>
-      <p>MAC Address: {minerData.macAddress}</p>
-      <p>Heat: {minerData.heat}</p>
-      <p>Fan Speed: {minerData.fanSpeed}</p>
-      <p>Hash Power: {minerData.hashPower}</p>
-      <p>Status: {minerData.status}</p>
+      <MinerTitle>Miner Info: {id}</MinerTitle>
+      <InfoCard>
+        <InfoRow>
+          <Label>IP:</Label> {minerData.ip}
+        </InfoRow>
+        <InfoRow>
+          <Label>MAC Address:</Label> {minerData.macAddress}
+        </InfoRow>
+        <InfoRow>
+          <Label>Heat:</Label> {minerData.heat}
+        </InfoRow>
+        <InfoRow>
+          <Label>Fan Speed:</Label> {minerData.fanSpeed}
+        </InfoRow>
+        <InfoRow>
+          <Label>Hash Power:</Label> {minerData.hashPower}
+        </InfoRow>
+        <InfoRow>
+          <Label>Status:</Label> {minerData.status}
+        </InfoRow>
+      </InfoCard>
     </MinerInfoContainer>
   );
 };

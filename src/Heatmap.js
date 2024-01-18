@@ -4,15 +4,16 @@ import { useNavigate } from 'react-router-dom';
 
 const HeatmapContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   margin-top: 50px;
+  justify-content: center;
+  gap: 300px;
 `;
 
 const Pod = styled.div`
   text-align: center;
   margin-bottom: 40px;
-  
 `;
 
 const PodTitle = styled.h2`
@@ -51,14 +52,15 @@ const Heatmap = () => {
   const handleClick = (minerId) => {
     navigate(`/minerinfo/${minerId}`);
   };
-
+  
   const renderMiners = (pod) => {
     return [...Array(100)].map((_, index) => (
-      <Miner key={`${pod}-${index}`} onClick={() => handleClick(`${pod}-${index}`)}>
-        {index + 1}
+      <Miner key={`${pod}-${index}`} onClick={() => handleClick(`${pod}-${index + 1}`)}>
+        {index + 1} {/* Display miner number starting from 1 */}
       </Miner>
     ));
   };
+  
 
   const renderPod = (pod) => {
     const miners = renderMiners(pod);
