@@ -144,15 +144,15 @@ const HeatSensor = () => {
 };
 
 const Security = () => {
-  const cameraUrls = [
-    'https://via.placeholder.com/320x320.png?text=Camera+1',
-    'https://via.placeholder.com/320x320.png?text=Camera+2',
-    'https://via.placeholder.com/320x320.png?text=Camera+3',
-    'https://via.placeholder.com/320x320.png?text=Camera+4',
-    'https://via.placeholder.com/320x320.png?text=Camera+5',
-    'https://via.placeholder.com/320x320.png?text=Camera+6',
-    // ... (other URLs)
-  ];
+    const cameraUrls = [
+      'https://example.com/live-feed/camera1',
+      'https://example.com/live-feed/camera2',
+      'https://example.com/live-feed/camera3',
+      'https://example.com/live-feed/camera4',
+      'https://example.com/live-feed/camera5',
+      'https://example.com/live-feed/camera6',
+      // ... (other URLs)
+    ];
 
   return (
     <SecurityContainer>
