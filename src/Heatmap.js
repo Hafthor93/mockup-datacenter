@@ -9,6 +9,7 @@ const HeatmapContainer = styled.div`
   margin-top: 50px;
   justify-content: center;
   gap: 300px;
+  height: 100vh;
 `;
 
 const Pod = styled.div`
