@@ -52,9 +52,9 @@ const Heatmap = () => {
   const handleClick = (minerId) => {
     navigate(`/minerinfo/${minerId}`);
   };
-  
+
   const renderMiners = (pod) => {
-    return [...Array(100)].map((_, index) => (
+    return [...Array(52)].map((_, index) => (
       <Miner key={`${pod}-${index}`} onClick={() => handleClick(`${pod}-${index + 1}`)}>
         {index + 1} {/* Display miner number starting from 1 */}
       </Miner>
