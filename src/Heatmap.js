@@ -1,91 +1,101 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+
+// Styled components for the layout
+const DashboardContainer = styled.div`
+  background: #121212;
+  color: #fff;
+  min-height: 100vh;
+`;
+
+const TopBar = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #222;
+`;
+
+const StatsBar = styled.div`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px;
+  background-color: #333;
+`;
 
 const HeatmapContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+  gap: 5px;
+  padding: 10px;
+`;
+
+const MinerBox = styled.div`
+  background-color: #333;
+  color: #ddd;
+  padding: 10px;
+  border-radius: 5px;
   display: flex;
-  flex-direction: row;
+  justify-content: center;
   align-items: center;
-  margin-top: 50px;
-  justify-content: center;
-  gap: 300px;
-  height: 100vh;
+  transition: background-color 0.2s;
 `;
 
-const Pod = styled.div`
-  text-align: center;
-  margin-bottom: 40px;
-`;
-
-const PodTitle = styled.h2`
-  margin-bottom: 20px;
-  color: #333;
-  font-size: 1.5rem;
-`;
-
-const Row = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-bottom: 10px;
-`;
-
-const Miner = styled.div`
-  width: 60px;
-  height: 60px;
-  line-height: 60px;
-  text-align: center;
-  background-color: #4caf50;
-  color: white;
-  margin: 5px;
-  border-radius: 10px;
+const TabButton = styled.button`
+  background: none;
+  border: none;
+  color: ${({ active }) => (active ? 'limegreen' : '#aaa')};
+  padding: 10px;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.3s;
 
   &:hover {
-    background-color: #66bb6a;
-    transform: scale(1.1);
+    color: limegreen;
   }
 `;
 
+// Dummy data generator for miners
+const generateMinersData = (count) => {
+  return Array.from({ length: count }, (_, index) => ({
+    id: index + 1,
+    hashrate: `${(Math.random() * 10).toFixed(2)} Th/s`,
+    temperature: `${Math.floor(Math.random() * 30) + 30}°C`,
+  }));
+};
+
 const Heatmap = () => {
-  const navigate = useNavigate();
+  const [minersData, setMinersData] = useState(generateMinersData(200));
+  const [view, setView] = useState('hashrate'); // 'hashrate' or 'temperature'
 
-  const handleClick = (minerId) => {
-    navigate(`/minerinfo/${minerId}`);
-  };
-
-  const renderMiners = (pod) => {
-    return [...Array(52)].map((_, index) => (
-      <Miner key={`${pod}-${index}`} onClick={() => handleClick(`${pod}-${index + 1}`)}>
-        {index + 1} {/* Display miner number starting from 1 */}
-      </Miner>
-    ));
-  };
+  const totalMiners = minersData.length;
+  const onlineMiners = minersData.filter(miner => miner.hashrate > 0).length;
+  const hashrate = minersData.reduce((acc, miner) => acc + parseFloat(miner.hashrate), 0).toFixed(2);
   
-
-  const renderPod = (pod) => {
-    const miners = renderMiners(pod);
-    const rows = [];
-    for (let i = 0; i < miners.length; i += 4) {
-      rows.push(
-        <Row key={`${pod}-row-${i / 4}`}>
-          {miners.slice(i, i + 4)}
-        </Row>
-      );
-    }
-    return (
-      <Pod key={pod}>
-        <PodTitle>{pod}</PodTitle>
-        {rows}
-      </Pod>
-    );
-  };
-
   return (
-    <HeatmapContainer>
-      {renderPod('POD1')}
-      {renderPod('POD2')}
-    </HeatmapContainer>
+    <DashboardContainer>
+      <TopBar>
+        {/* Top bar content goes here */}
+      </TopBar>
+      <StatsBar>
+        <div>Miners: {onlineMiners}/{totalMiners}</div>
+        <div>Current Hashrate: {hashrate} Th/s</div>
+        <div>
+          <TabButton onClick={() => setView('hashrate')} active={view === 'hashrate'}>
+            Hashrate
+          </TabButton>
+          <TabButton onClick={() => setView('temperature')} active={view === 'temperature'}>
+            Temperature
+          </TabButton>
+        </div>
+      </StatsBar>
+      <HeatmapContainer>
+        {minersData.map((miner) => (
+          <MinerBox key={miner.id}>
+            {view === 'hashrate' ? miner.hashrate : miner.temperature}
+          </MinerBox>
+        ))}
+      </HeatmapContainer>
+    </DashboardContainer>
   );
 };
 
