@@ -32,8 +32,8 @@ const CameraGrid = styled.div`
 `;
 
 const CameraFeed = styled.div`
-  width: 350px;
-  height: 350px;
+  width: 320px;
+  height: 320px;
   border: 2px solid #61dafb;  /* Light blue border */
   border-radius: 8px;  /* Rounded corners */
   overflow: hidden;
@@ -72,7 +72,6 @@ const SensorBox = styled.div`
   overflow: hidden;
   display: flex;
   align-items: center;
-  text-align: center;
   justify-content: center;
   font-size: 0.8rem;  /* Smaller font size */
   color: white;
@@ -144,15 +143,15 @@ const HeatSensor = () => {
 };
 
 const Security = () => {
-    const cameraUrls = [
-      'https://example.com/live-feed/camera1',
-      'https://example.com/live-feed/camera2',
-      'https://example.com/live-feed/camera3',
-      'https://example.com/live-feed/camera4',
-      'https://example.com/live-feed/camera5',
-      'https://example.com/live-feed/camera6',
-      // ... (other URLs)
-    ];
+  const cameraUrls = [
+    'https://example.com/live-feed/camera1',
+    'https://example.com/live-feed/camera2',
+    'https://example.com/live-feed/camera3',
+    'https://example.com/live-feed/camera4',
+    'https://example.com/live-feed/camera5',
+    'https://example.com/live-feed/camera6',
+    // ... (other URLs)
+  ];
 
   return (
     <SecurityContainer>
