@@ -1,176 +1,114 @@
-// Security.js
-
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 const SecurityContainer = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px;
   padding: 20px;
-  background-color: #282c35;  /* Dark background */
-  color: #f2f2f2;  /* Light text color */
-  border-radius: 10px;  /* Rounded corners */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);  /* Shadow effect */
-`;
-
-const CameraSection = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex: 1;  /* Take remaining space */
-`;
-
-const CameraHeader = styled.h2`
-  margin-bottom: 10px;
-  font-size: 1.5rem;  /* Larger font size */
-`;
-
-const CameraGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
+  background-color: #34495e; /* Darker blue */
+  color: #ecf0f1;
+  border-radius: 15px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 `;
 
 const CameraFeed = styled.div`
-  width: 320px;
-  height: 320px;
-  border: 2px solid #61dafb;  /* Light blue border */
-  border-radius: 8px;  /* Rounded corners */
+  width: 100%;
+  border-radius: 15px;
   overflow: hidden;
   position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 `;
 
 const CameraImage = styled.img`
   width: 100%;
-  height: 100%;
+  height: auto;
   object-fit: cover;
+  border-radius: 15px;
 `;
 
 const SensorSection = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex: 1;  /* Take remaining space */
-`;
-
-const SensorHeader = styled.h2`
-  margin-bottom: 10px;
-  font-size: 1.5rem;  /* Larger font size */
-`;
-
-const SensorGrid = styled.div`
-  display: grid;
-  grid-template-rows: repeat(3, 1fr);
-  gap: 15px;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #2c3e50; /* Darker background for sensors */
+  border-radius: 0 0 15px 15px;
 `;
 
 const SensorBox = styled.div`
-  width: 80px;
-  height: 80px;
-  border: 2px solid #61dafb;  /* Light blue border */
-  border-radius: 50%;  /* Circular shape */
+  width: 48%;
+  height: 40px;
+  border-radius: 10px;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.8rem;  /* Smaller font size */
+  font-size: 0.8rem;
   color: white;
-  background-color: ${props => (props.sensorActive ? '#e74c3c' : '#2ecc71')};  /* Red or green background based on sensor status */
-  transition: background-color 0.5s ease;  /* Smooth transition */
+  background-color: ${props => (props.sensorActive ? '#e74c3c' : '#2ecc71')};
+  transition: background-color 0.5s ease;
 `;
 
-const MotionSensor = () => {
+const MotionSensor = ({ sensorActive }) => (
+  <SensorBox sensorActive={sensorActive}>
+    {sensorActive ? 'Motion Detected' : 'No Motion'}
+  </SensorBox>
+);
+
+const HeatSensor = ({ temperature }) => (
+  <SensorBox sensorActive={true}>{`${temperature}°C`}</SensorBox>
+);
+
+const CameraWithSensors = ({ imageUrl }) => {
   const [motionDetected, setMotionDetected] = useState(false);
+  const [fakeHeat, setFakeHeat] = useState(40);
 
   useEffect(() => {
-    // Simulating random motion detection
-    const intervalId = setInterval(() => {
-      setMotionDetected(Math.random() < 0.2); // 20% chance of motion detection
-    }, 3000);  // Change every 3000 milliseconds (3 seconds)
+    const motionIntervalId = setInterval(() => {
+      setMotionDetected(Math.random() < 0.2);
+    }, 3000);
 
-    return () => clearInterval(intervalId);
-  }, []);
-
-  return (
-    <SensorSection>
-      <SensorHeader>Motion Sensors</SensorHeader>
-      <SensorGrid>
-        <SensorBox sensorActive={motionDetected}>
-          {motionDetected ? 'Motion Detected' : 'No Motion'}
-        </SensorBox>
-        <SensorBox sensorActive={motionDetected}>
-          {motionDetected ? 'Motion Detected' : 'No Motion'}
-        </SensorBox>
-        <SensorBox sensorActive={motionDetected}>
-          {motionDetected ? 'Motion Detected' : 'No Motion'}
-        </SensorBox>
-      </SensorGrid>
-    </SensorSection>
-  );
-};
-
-const HeatSensor = () => {
-  const [fakeHeat, setFakeHeat] = useState(40);  // Starting heat value
-
-  useEffect(() => {
-    // Simulating heat changing randomly in the range of 40-60
-    const intervalId = setInterval(() => {
+    const heatIntervalId = setInterval(() => {
       setFakeHeat(prevHeat => {
-        const newHeat = prevHeat + Math.floor(Math.random() * 6) - 3; // Random change between -3 and +3
-        return Math.min(60, Math.max(40, newHeat));  // Ensure the temperature stays in the range [40, 60]
+        const newHeat = prevHeat + Math.floor(Math.random() * 6) - 3;
+        return Math.min(60, Math.max(40, newHeat));
       });
-    }, 5000);  // Change every 5000 milliseconds (5 seconds)
+    }, 5000);
 
-    return () => clearInterval(intervalId);
+    return () => {
+      clearInterval(motionIntervalId);
+      clearInterval(heatIntervalId);
+    };
   }, []);
 
   return (
-    <SensorSection>
-      <SensorHeader>Heat Sensors</SensorHeader>
-      <SensorGrid>
-        <SensorBox sensorActive={fakeHeat > 50}>
-          {fakeHeat}°C
-        </SensorBox>
-        <SensorBox sensorActive={fakeHeat > 50}>
-          {fakeHeat}°C
-        </SensorBox>
-        <SensorBox sensorActive={fakeHeat > 50}>
-          {fakeHeat}°C
-        </SensorBox>
-      </SensorGrid>
-    </SensorSection>
+    <CameraFeed>
+      <CameraImage src={imageUrl} alt="Live Feed Camera" />
+      <SensorSection>
+        <MotionSensor sensorActive={motionDetected} />
+        <HeatSensor sensorActive={motionDetected} temperature={fakeHeat} />
+      </SensorSection>
+    </CameraFeed>
   );
 };
 
 const Security = () => {
   const cameraUrls = [
-    'https://example.com/live-feed/camera1',
-    'https://example.com/live-feed/camera2',
-    'https://example.com/live-feed/camera3',
-    'https://example.com/live-feed/camera4',
-    'https://example.com/live-feed/camera5',
-    'https://example.com/live-feed/camera6',
-    // ... (other URLs)
+    'https://via.placeholder.com/280x280.png?text=Camera+1',
+    'https://via.placeholder.com/280x280.png?text=Camera+2',
+    'https://via.placeholder.com/280x280.png?text=Camera+3',
+    'https://via.placeholder.com/280x280.png?text=Camera+4',
+    'https://via.placeholder.com/280x280.png?text=Camera+5',
+    'https://via.placeholder.com/280x280.png?text=Camera+6',
+    'https://via.placeholder.com/280x280.png?text=Camera+7',
+    'https://via.placeholder.com/280x280.png?text=Camera+8',
   ];
 
   return (
     <SecurityContainer>
-      <CameraSection>
-        <CameraHeader>Camera Feed</CameraHeader>
-        <CameraGrid>
-          {cameraUrls.map((url, index) => (
-            <CameraFeed key={index}>
-              <CameraImage src={url} alt={`Camera ${index + 1}`} />
-            </CameraFeed>
-          ))}
-        </CameraGrid>
-      </CameraSection>
-
-      <SensorSection>
-        <MotionSensor />
-      </SensorSection>
-
-      <HeatSensor />
+      {cameraUrls.map((url, index) => (
+        <CameraWithSensors key={index} imageUrl={url} />
+      ))}
     </SecurityContainer>
   );
 };
