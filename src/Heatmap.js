@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
+
+import styled, { css } from 'styled-components';
 
 // Styled components for the layout
 const DashboardContainer = styled.div`
@@ -32,15 +33,44 @@ const HeatmapContainer = styled.div`
 `;
 
 const MinerBox = styled.div`
-  background-color: #333;
+  background-color: #222; // Darker background
   color: #ddd;
-  padding: 10px;
   border-radius: 5px;
+  padding: 10px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  transition: background-color 0.2s;
+  height: 100px; // Adjust height as needed
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); // Add subtle shadow for depth
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+
+  .hashrate {
+    font-size: 0.9em;
+    font-weight: bold;
+  }
+
+  .miner-status {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-top: 5px;
+    ${({ online }) => online
+      ? css`background-color: green;`
+      : css`background-color: red;`
+    }
+  }
+
+  .miner-number {
+    font-size: 0.8em;
+    color: #aaa;
+  }
 `;
+
 
 const TabButton = styled.button`
   background: none;
@@ -66,7 +96,7 @@ const generateMinersData = (count) => {
 const Heatmap = () => {
   const [minersData, setMinersData] = useState(generateMinersData(200));
   const [view, setView] = useState('hashrate'); // 'hashrate' or 'temperature'
-
+    
   const totalMiners = minersData.length;
   const onlineMiners = minersData.filter(miner => miner.hashrate > 0).length;
   const hashrate = minersData.reduce((acc, miner) => acc + parseFloat(miner.hashrate), 0).toFixed(2);
@@ -89,11 +119,13 @@ const Heatmap = () => {
         </div>
       </StatsBar>
       <HeatmapContainer>
-        {minersData.map((miner) => (
-          <MinerBox key={miner.id}>
-            {view === 'hashrate' ? miner.hashrate : miner.temperature}
-          </MinerBox>
-        ))}
+      {minersData.map((miner, index) => (
+    <MinerBox key={index} online={miner.online}>
+      <div className="hashrate">{miner.hashrate}</div>
+      <div className="miner-status" />
+      <div className="miner-number">{index + 1}</div>
+    </MinerBox>
+  ))}
       </HeatmapContainer>
     </DashboardContainer>
   );
