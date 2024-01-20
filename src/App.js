@@ -1,15 +1,19 @@
+// App.js
+import './index.css';
 import React from 'react';
-import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import styled from 'styled-components';
+import Home from './Home'; // Import the Home component
 import Heatmap from './Heatmap';
 import MinerInfo from './MinerInfo';
 import Security from './Security';
 
 
 
+
+
 const Container = styled.div`
   background-color: #f4f4f4;
-
 `;
 
 const Navbar = styled.nav`
@@ -41,8 +45,6 @@ const NavLinks = styled.div`
   }
 `;
 
-const Home = () => <div>Home Page</div>;
-
 const Info = () => <div>Info Page</div>;
 const Settings = () => <div>Settings Page</div>;
 
@@ -57,19 +59,17 @@ const App = () => {
             <Link to="/heatmap">Heatmap</Link>
             <Link to="/info">Info</Link>
             <Link to="/settings">Settings</Link>
-            <Link to="/security">Security</Link> {/* Added Security Link */}
+            <Link to="/security">Security</Link>
           </NavLinks>
         </Navbar>
         <Routes>
-  <Route path="/" element={<Home />} />
-  <Route path="/heatmap" element={<Heatmap />} />
-  <Route path="/info" element={<Info />} />
-  <Route path="/settings" element={<Settings />} />
-  <Route path="/minerinfo/:id" element={<MinerInfo />} />
-  <Route path="/security" element={<Security />} />
-</Routes>
-
-
+          <Route path="/" element={<Home />} />
+          <Route path="/heatmap" element={<Heatmap />} />
+          <Route path="/info" element={<Info />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/minerinfo/:id" element={<MinerInfo />} />
+          <Route path="/security" element={<Security />} />
+        </Routes>
       </Container>
     </BrowserRouter>
   );
