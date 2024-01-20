@@ -53,12 +53,13 @@ const App = () => {
         <Navbar>
           <Logo src="your_logo_url.png" alt="Logo" />
           <NavLinks>
-            <Link to="/">Home</Link>
-            <Link to="/heatmap">Heatmap</Link>
-            <Link to="/info">Info</Link>
-            <Link to="/settings">Settings</Link>
-            <Link to="/security">Security</Link> {/* Added Security Link */}
+          <Link to="/">Home</Link> {/* Added Homepage Link */}
+          <Link to="/heatmap">Heatmap</Link>
+          <Link to="/info">Info</Link>
+          <Link to="/settings">Settings</Link>
+          <Link to="/security">Security</Link>
           </NavLinks>
+
         </Navbar>
         <Routes>
   <Route path="/" element={<Home />} />
@@ -67,6 +68,8 @@ const App = () => {
   <Route path="/settings" element={<Settings />} />
   <Route path="/minerinfo/:id" element={<MinerInfo />} />
   <Route path="/security" element={<Security />} />
+  <Route path="/" element={<Home />} />
+
 </Routes>
 
 
