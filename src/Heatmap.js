@@ -94,7 +94,7 @@ const generateMinersData = (count) => {
 };
 
 const Heatmap = () => {
-  const minersData = useState(generateMinersData(200))[0];
+  const [minersData, setMinersData] = useState(generateMinersData(200));
   const [view, setView] = useState('hashrate'); // 'hashrate' or 'temperature'
     
   const totalMiners = minersData.length;
