@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const DashboardContainer = styled.div`
   background: #121212;
@@ -118,6 +119,8 @@ const Stats = styled.div`
   color: #ddd;
 `;
 
+
+
 const generateMinersData = (count) => {
   return Array.from({ length: count }, (_, index) => ({
     id: index + 1,
@@ -127,12 +130,18 @@ const generateMinersData = (count) => {
   }));
 };
 
+
+
 const Heatmap = () => {
   const [minersData] = useState(generateMinersData(100)); // Total of 100 miners
   const [activeTab, setActiveTab] = useState('hashrate');
+  const navigate = useNavigate();
 
+const handleMinerClick = (minerId) => {
+  navigate(`/minerinfo/${minerId}`);
+};
   const renderMiners = (miners) => miners.map((miner) => (
-    <MinerBox key={miner.id} online={miner.online}>
+    <MinerBox key={miner.id} online={miner.online} onClick={() => handleMinerClick(miner.id)}>
       <div className="hashrate">{activeTab === 'hashrate' ? miner.hashrate : miner.temperature}</div>
       <div className="miner-status"></div>
       <div className="miner-number">{miner.id}</div>
