@@ -3,18 +3,18 @@ import styled from 'styled-components';
 
 const SecurityContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  padding: 20px;
-  background-color: #34495e; /* Darker blue */
+  grid-template-columns: repeat(5, 0.8fr); // Smaller columns
+  gap: 15px; // Reduced gap
+  padding: 15px; // Reduced padding
+  background-color: #34495e;
   color: #ecf0f1;
   border-radius: 15px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 `;
 
 const CameraFeed = styled.div`
-  width: 100%;
-  border-radius: 15px;
+  width: 100%; // Reduced width
+  border-radius: 10px;
   overflow: hidden;
   position: relative;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -36,14 +36,14 @@ const SensorSection = styled.div`
 `;
 
 const SensorBox = styled.div`
-  width: 48%;
-  height: 40px;
+  width: 45%; // Slightly smaller
+  height: 35px; // Slightly shorter
   border-radius: 10px;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.8rem;
+  font-size: 0.7rem; // Smaller font size
   color: white;
   background-color: ${props => (props.sensorActive ? '#e74c3c' : '#2ecc71')};
   transition: background-color 0.5s ease;
@@ -102,6 +102,8 @@ const Security = () => {
     'https://via.placeholder.com/280x280.png?text=Camera+6',
     'https://via.placeholder.com/280x280.png?text=Camera+7',
     'https://via.placeholder.com/280x280.png?text=Camera+8',
+    'https://via.placeholder.com/280x280.png?text=Camera+9',
+    'https://via.placeholder.com/280x280.png?text=Camera+10',
   ];
 
   return (
