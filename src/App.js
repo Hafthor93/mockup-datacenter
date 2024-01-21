@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Heatmap from './Heatmap';
 import MinerInfo from './MinerInfo';
 import Security from './Security';
+import HomePage from './HomePage';
 
 const Container = styled.div`
   background-color: #f4f4f4;
@@ -177,7 +178,7 @@ const App = () => {
             <Logo src="https://www.tecna.is/cdn/shop/files/Tecna_ed_2_Icelandic.png?v=1695718500&width=300.png" alt="Logo" />
           </Link>
           <NavLinks>
-            <Link to="/">Home</Link>
+            <Link to="/">HomePage</Link>
             <Link to="/heatmap">Heatmap</Link>
             {isLoggedIn && <Link to="/security">Security</Link>}
             <Link to="/account">Account</Link>
@@ -194,7 +195,7 @@ const App = () => {
           <button onClick={handleLogout}>Logout</button>
         </DropdownMenu>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/heatmap" element={<Heatmap />} />
           <Route path="/minerinfo/:id" element={<MinerInfo />} />
           <Route path="/security" element={<Security />} />
