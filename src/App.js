@@ -42,9 +42,7 @@ const NavLinks = styled.div`
 `;
 
 const Home = () => <div>Home Page</div>;
-
-const Info = () => <div>Info Page</div>;
-const Settings = () => <div>Settings Page</div>;
+const Account = () => <div>Account Page</div>;
 
 const App = () => {
   return (
@@ -55,19 +53,17 @@ const App = () => {
           <NavLinks>
           <Link to="/">Home</Link> {/* Added Homepage Link */}
           <Link to="/heatmap">Heatmap</Link>
-          <Link to="/info">Info</Link>
-          <Link to="/settings">Settings</Link>
           <Link to="/security">Security</Link>
+          <Link to="/account">Account</Link>
           </NavLinks>
 
         </Navbar>
         <Routes>
   <Route path="/" element={<Home />} />
   <Route path="/heatmap" element={<Heatmap />} />
-  <Route path="/info" element={<Info />} />
-  <Route path="/settings" element={<Settings />} />
   <Route path="/minerinfo/:id" element={<MinerInfo />} />
   <Route path="/security" element={<Security />} />
+  <Route path="/account" element={<Account />} />
   <Route path="/" element={<Home />} />
 
 </Routes>
