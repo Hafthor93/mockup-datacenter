@@ -28,15 +28,6 @@ const StatsBar = styled.div`
   background-color: #333;
 `;
 
-const PodWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  width: 100%;
-  gap: 150px;
-  padding: 20px;
-`;
-
 const PodContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -63,7 +54,7 @@ const MinerBox = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 90px;
-  width: 70px;
+  width: 60px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   transition: transform 0.2s;
   font-size: 0.9em;
@@ -105,6 +96,16 @@ const TabButton = styled.button`
   }
 `;
 
+const PodWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  gap: 200px;
+  padding: 20px;
+`;
+
+
 const TabContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -127,13 +128,17 @@ const generateMinersData = (count) => {
 };
 
 const Heatmap = () => {
-  const minersData = useState(generateMinersData(200))[0];
-  const [view, setView] = useState('hashrate'); // 'hashrate' or 'temperature'
-    
-  const totalMiners = minersData.length;
-  const onlineMiners = minersData.filter(miner => miner.hashrate > 0).length;
-  const hashrate = minersData.reduce((acc, miner) => acc + parseFloat(miner.hashrate), 0).toFixed(2);
-  
+  const [minersData] = useState(generateMinersData(100)); // Total of 100 miners
+  const [activeTab, setActiveTab] = useState('hashrate');
+
+  const renderMiners = (miners) => miners.map((miner) => (
+    <MinerBox key={miner.id} online={miner.online}>
+      <div className="hashrate">{activeTab === 'hashrate' ? miner.hashrate : miner.temperature}</div>
+      <div className="miner-status"></div>
+      <div className="miner-number">{miner.id}</div>
+    </MinerBox>
+  ));
+
   return (
     <DashboardContainer>
       <TopBar> {/* Top bar content goes here */} </TopBar>

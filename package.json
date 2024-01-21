@@ -41,10 +41,6 @@
     ]
   },
   "devDependencies": {
-<<<<<<< HEAD
-
-=======
     "babel-plugin-styled-components": "^1.13.3"
->>>>>>> c259a1428ce6b5f2bd3c151e79e1e5d088ebdc65
   }
 }
