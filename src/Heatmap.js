@@ -25,7 +25,7 @@ const StatsBar = styled.div`
   justify-content: space-around;
   align-items: center;
   padding: 10px;
-  width: 100%;
+  width: 100%; 
   background-color: #333;
 `;
 
