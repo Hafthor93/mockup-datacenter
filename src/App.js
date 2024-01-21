@@ -14,21 +14,54 @@ const Navbar = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
-  background-color: black;
+  padding: 10px 30px;
+  background-color: #2c3e50;
   color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+
+  a, button {
+    color: white;
+    text-decoration: none;
+    margin: 15px 15px;
+    font-size: 18px; // Slightly larger for modern look
+    font-weight: 600; // Medium weight for a bolder appearance
+    letter-spacing: 0.05em; // Slight spacing for a cleaner look
+    transition: color 0.3s, transform 0.3s;
+
+    &:hover {
+      color: #ecf0f1;
+      transform: translateY(-2px); // Subtle lift effect on hover
+    }
+  }
+
+  button {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  // ... Rest of your Navbar styles
 `;
 
 const Logo = styled.img`
-  width: 200px;
-  height: auto;
+    width: 150px;
+    height: auto;
+    transition: transform 0.3s ease-in-out;
+
+    &:hover {
+      transform: scale(1.05); // Slightly enlarges logo on hover
+    }
 `;
 
 const UserLogo = styled.img`
-  width: 50px;
-  height: auto;
-  cursor: pointer;
+    width: 50px;
+    cursor: pointer;
+    transition: border 0.3s, transform 0.3s;
+    &:hover {
+      transform: scale(1.10); // Slightly enlarges logo on hover
+    }
 `;
+
 
 const NavLinks = styled.div`
   display: flex;
@@ -141,7 +174,9 @@ const App = () => {
     <BrowserRouter>
       <Container>
         <Navbar>
-          <Logo src="https://www.tecna.is/cdn/shop/files/Tecna_ed_2_Icelandic.png?v=1695718500&width=300.png"  alt="Logo" />
+        <Link to="/Home">
+            <Logo src="https://www.tecna.is/cdn/shop/files/Tecna_ed_2_Icelandic.png?v=1695718500&width=300.png" alt="Logo" />
+          </Link>
           <NavLinks>
             <Link to="/">HomePage</Link>
             <Link to="/heatmap">Heatmap</Link>
