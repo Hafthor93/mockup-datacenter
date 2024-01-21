@@ -127,19 +127,6 @@ const generateMinersData = (count) => {
 };
 
 const Heatmap = () => {
-<<<<<<< HEAD
-  const [minersData] = useState(generateMinersData(100)); // Total of 100 miners
-  const [activeTab, setActiveTab] = useState('hashrate');
-
-  const renderMiners = (miners) => miners.map((miner) => (
-    <MinerBox key={miner.id} online={miner.online}>
-      <div className="hashrate">{activeTab === 'hashrate' ? miner.hashrate : miner.temperature}</div>
-      <div className="miner-status"></div>
-      <div className="miner-number">{miner.id}</div>
-    </MinerBox>
-  ));
-
-=======
   const minersData = useState(generateMinersData(200))[0];
   const [view, setView] = useState('hashrate'); // 'hashrate' or 'temperature'
     
@@ -147,7 +134,6 @@ const Heatmap = () => {
   const onlineMiners = minersData.filter(miner => miner.hashrate > 0).length;
   const hashrate = minersData.reduce((acc, miner) => acc + parseFloat(miner.hashrate), 0).toFixed(2);
   
->>>>>>> c259a1428ce6b5f2bd3c151e79e1e5d088ebdc65
   return (
     <DashboardContainer>
       <TopBar> {/* Top bar content goes here */} </TopBar>
