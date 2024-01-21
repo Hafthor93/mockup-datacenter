@@ -1,57 +1,52 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
-import axios from "axios";
-
 
 const CryptoContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 50px;
-  height: 100vh;
+  justify-content: space-around;
+  padding: 20px;
 `;
 
 const CryptoCard = styled.div`
   background: #222;
   color: #fff;
   padding: 20px;
-  margin: 10px 0;
   border-radius: 10px;
-  width: 300px;
+  margin: 10px;
+  width: 200px;
   text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 `;
 
 const HomePage = () => {
   const [cryptoData, setCryptoData] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchCryptoData = async () => {
       try {
-        // Replace 'YOUR_CRYPTO_API_ENDPOINT' with your actual API endpoint
-        const response = await axios.get('YOUR_CRYPTO_API_ENDPOINT');
-        
-        // Update the state with the fetched data
-        // You might need to adjust the mapping depending on the structure of your API response
-        setCryptoData(response.data.map((crypto) => ({
-          name: crypto.name,
-          symbol: crypto.symbol,
-          price: crypto.price_usd, // Replace 'price_usd' with the actual key for price in your API response
-        })));
+        const response = await axios.get('https://api.coingecko.com/api/v3/coins/markets', {
+          params: {
+            vs_currency: 'usd',
+            ids: 'bitcoin,ethereum,solana,ripple,chainlink', // Specify the cryptocurrencies you want to fetch here
+          },
+        });
+        setCryptoData(response.data);
       } catch (error) {
         console.error('Error fetching crypto data:', error);
       }
     };
 
-    fetchData();
+    fetchCryptoData();
   }, []);
 
   return (
     <CryptoContainer>
-      {cryptoData.map((crypto, index) => (
-        <CryptoCard key={index}>
-          <h3>{crypto.name} ({crypto.symbol})</h3>
-          <p>${crypto.price}</p>
+      {cryptoData.map((crypto) => (
+        <CryptoCard key={crypto.id}>
+          <h2>{crypto.name}</h2>
+          <p>{`$${crypto.current_price.toLocaleString()}`}</p>
+          <p>{`Market Cap: $${crypto.market_cap.toLocaleString()}`}</p>
+          <p>{`24h Change: ${crypto.price_change_percentage_24h.toFixed(2)}%`}</p>
         </CryptoCard>
       ))}
     </CryptoContainer>
@@ -59,4 +54,3 @@ const HomePage = () => {
 };
 
 export default HomePage;
-
