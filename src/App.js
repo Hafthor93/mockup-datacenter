@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import Heatmap from './Heatmap';
 import MinerInfo from './MinerInfo';
 import Security from './Security';
-import HomePage from './HomePage';
 
 const Container = styled.div`
   background-color: #f4f4f4;
@@ -57,6 +56,7 @@ const UserLogo = styled.img`
     width: 50px;
     cursor: pointer;
     transition: border 0.3s, transform 0.3s;
+
     &:hover {
       transform: scale(1.10); // Slightly enlarges logo on hover
     }
@@ -174,11 +174,11 @@ const App = () => {
     <BrowserRouter>
       <Container>
         <Navbar>
-        <Link to="/">
+        <Link to="/Home">
             <Logo src="https://www.tecna.is/cdn/shop/files/Tecna_ed_2_Icelandic.png?v=1695718500&width=300.png" alt="Logo" />
           </Link>
           <NavLinks>
-            <Link to="/">HomePage</Link>
+            <Link to="/">Home</Link>
             <Link to="/heatmap">Heatmap</Link>
             {isLoggedIn && <Link to="/security">Security</Link>}
             <Link to="/account">Account</Link>
@@ -195,7 +195,7 @@ const App = () => {
           <button onClick={handleLogout}>Logout</button>
         </DropdownMenu>
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<Home />} />
           <Route path="/heatmap" element={<Heatmap />} />
           <Route path="/minerinfo/:id" element={<MinerInfo />} />
           <Route path="/security" element={<Security />} />
