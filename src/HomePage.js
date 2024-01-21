@@ -9,12 +9,12 @@ const CryptoContainer = styled.div`
 `;
 
 const CryptoCard = styled.div`
-  background: #222;
+  background: #181a29;
   color: #fff;
   padding: 20px;
   border-radius: 10px;
   margin: 10px;
-  width: 200px;
+  width: 300px;
   text-align: center;
 `;
 

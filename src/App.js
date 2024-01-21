@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Heatmap from './Heatmap';
 import MinerInfo from './MinerInfo';
 import Security from './Security';
+import './App.css';
+import HomePage from './HomePage';
 
 const Container = styled.div`
   background-color: #f4f4f4;
@@ -14,7 +16,7 @@ const Navbar = styled.nav`
   justify-content: space-between;
   align-items: center;
   padding: 10px 30px;
-  background-color: #2c3e50;
+  background-color: #181a29;
   color: white;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
 
@@ -122,35 +124,11 @@ const SubmitButton = styled.button`
   }
 `;
 
-const Home = () => <div>Home Page</div>;
-
-const Account = ({ onLogin, loginError, setLoginError }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (!username || !password) {
-      setLoginError('Username and password are required');
-      return;
-    }
-    onLogin(username, password);
-  };
-
-  return (
-    <LoginForm onSubmit={handleSubmit}>
-      <Input type="text" placeholder="Username" onChange={(e) => setUsername(e.target.value)} />
-      <Input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
-      {loginError && <p style={{ color: 'red' }}>{loginError}</p>}
-      <SubmitButton type="submit">Login</SubmitButton>
-    </LoginForm>
-  );
-};
-
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn') === 'true');
   const [loginError, setLoginError] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
+  const [user, setUser] = useState(null); // State to store user information
 
   useEffect(() => {
     localStorage.setItem('isLoggedIn', isLoggedIn);
@@ -159,6 +137,7 @@ const App = () => {
   const handleLogin = (username, password) => {
     if (username === 'Tecna' && password === 'Mining') {
       setIsLoggedIn(true);
+      setUser({ username }); // Store user information
       setLoginError('');
     } else {
       setLoginError('Invalid credentials. Please try again.');
@@ -168,13 +147,14 @@ const App = () => {
   const handleLogout = () => {
     setIsLoggedIn(false);
     setShowDropdown(false);
+    setUser(null); // Clear user information on logout
   };
 
   return (
     <BrowserRouter>
       <Container>
         <Navbar>
-        <Link to="/Home">
+          <Link to="/">
             <Logo src="https://www.tecna.is/cdn/shop/files/Tecna_ed_2_Icelandic.png?v=1695718500&width=300.png" alt="Logo" />
           </Link>
           <NavLinks>
@@ -195,14 +175,48 @@ const App = () => {
           <button onClick={handleLogout}>Logout</button>
         </DropdownMenu>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/heatmap" element={<Heatmap />} />
           <Route path="/minerinfo/:id" element={<MinerInfo />} />
           <Route path="/security" element={<Security />} />
-          <Route path="/account" element={<Account onLogin={handleLogin} loginError={loginError} setLoginError={setLoginError} />} />
+          <Route path="/account" element={<Account onLogin={handleLogin} loginError={loginError} setLoginError={setLoginError} user={user} />} />
         </Routes>
       </Container>
     </BrowserRouter>
+  );
+};
+
+const Account = ({ onLogin, loginError, setLoginError, user }) => {
+  const navigate = useNavigate();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (!username || !password) {
+      setLoginError('Username and password are required');
+      return;
+    }
+    onLogin(username, password);
+    navigate('/'); // Redirect to HomePage
+  };
+
+  return (
+    <div>
+      {user ? (
+        <div>
+          <h3>Welcome, {user.username}</h3>
+          {/* Additional user information can be displayed here */}
+        </div>
+      ) : (
+        <LoginForm onSubmit={handleSubmit}>
+          <Input type="text" placeholder="Username" onChange={(e) => setUsername(e.target.value)} />
+          <Input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+          {loginError && <p style={{ color: 'red' }}>{loginError}</p>}
+          <SubmitButton type="submit">Login</SubmitButton>
+        </LoginForm>
+      )}
+    </div>
   );
 };
 

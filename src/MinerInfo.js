@@ -6,7 +6,7 @@ const MinerInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #121212;
+  background: #181a29;
   color: #fff;
   min-height: 100vh;
 `;

@@ -2,49 +2,48 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 const SecurityContainer = styled.div`
+  background-color: #181a29; /* Matching the dark background */
+  color: #fff; /* White text for contrast */
   display: grid;
-  grid-template-columns: repeat(5, 0.8fr); // Smaller columns
-  gap: 15px; // Reduced gap
-  padding: 15px; // Reduced padding
-  background-color: #34495e;
-  color: #ecf0f1;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  grid-template-columns: repeat(5, 1fr);
+  gap: 15px;
+  padding: 15px;
 `;
 
 const CameraFeed = styled.div`
-  width: 100%; // Reduced width
+  background-color: #222; /* Dark background for each camera feed */
   border-radius: 10px;
   overflow: hidden;
   position: relative;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Adjusted shadow for consistency */
 `;
 
 const CameraImage = styled.img`
   width: 100%;
   height: auto;
   object-fit: cover;
-  border-radius: 15px;
+  border-radius: 10px; /* Rounded corners */
 `;
 
 const SensorSection = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 10px;
-  background-color: #2c3e50; /* Darker background for sensors */
-  border-radius: 0 0 15px 15px;
+  background-color: #333; /* Dark background for sensor section */
+  border-radius: 0 0 10px 10px; /* Rounded bottom corners */
 `;
 
 const SensorBox = styled.div`
-  width: 45%; // Slightly smaller
-  height: 35px; // Slightly shorter
+  width: 45%;
+  height: 35px;
   border-radius: 10px;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.7rem; // Smaller font size
+  font-size: 0.9rem; /* Adjusted font size for readability */
   color: white;
-  background-color: ${props => (props.sensorActive ? '#e74c3c' : '#2ecc71')};
+  background-color: ${props => (props.sensorActive ? '#e74c3c' : '#2ecc71')}; /* Color for active/inactive sensors */
   transition: background-color 0.5s ease;
 `;
 

@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
 const DashboardContainer = styled.div`
-  background: #121212;
+  background: #181a29;
   color: #fff;
   display: flex;
   flex-direction: column;
