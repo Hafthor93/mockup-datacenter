@@ -8,7 +8,6 @@ const SecurityContainer = styled.div`
   padding: 15px; // Reduced padding
   background-color: #34495e;
   color: #ecf0f1;
-  border-radius: 15px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 `;
 
