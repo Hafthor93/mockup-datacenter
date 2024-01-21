@@ -54,7 +54,7 @@ const MinerBox = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 90px;
-  width: 60px;
+  width: 70px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   transition: transform 0.2s;
   font-size: 0.9em;
