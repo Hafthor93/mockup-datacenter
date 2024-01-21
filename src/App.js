@@ -174,7 +174,7 @@ const App = () => {
     <BrowserRouter>
       <Container>
         <Navbar>
-        <Link to="/Home">
+        <Link to="/HomePage">
             <Logo src="https://www.tecna.is/cdn/shop/files/Tecna_ed_2_Icelandic.png?v=1695718500&width=300.png" alt="Logo" />
           </Link>
           <NavLinks>
